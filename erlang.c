@@ -34,7 +34,7 @@ double erlangb_offered_erlang(double capacity, double gos)
 
   do {
     blocking = erlangb_blocking_prob(erlang, capacity);
-    erlang--;
+    erlang -= 0.001;
     /* printf(" --- current b/e: %lf/%lf ---\n", blocking, erlang); */
   } while (blocking > gos);
 
@@ -57,6 +57,16 @@ int main(void)
   double capacity = 30.0;
   double gos = 0.02;
 
+  erlang = 38.79;
+  capacity = 39;
+
+  printf("Overflow: %lf, Blocking: %lf, Offered Erlang: %lf, Capacity: %lf, Measured Erlang: %lf\n", 
+          erlangb_overflow_traffic(erlang, capacity), 
+          erlangb_blocking_prob(erlang, capacity), 
+          erlangb_offered_erlang(capacity, 0.02), 
+          capacity, erlang);
+
+  /*
   for (; erlang <= capacity; erlang++) {
     printf("Erlang: %lf, Capacity: %lf, Blocking (%): %lf\n", erlang, capacity, erlangb_blocking_prob(erlang, capacity)*100.0);
   }
@@ -72,6 +82,7 @@ int main(void)
   for (; erlang <= capacity; erlang++) {
     printf("Erlang: %lf, Capacity: %lf, Overflow: %lf\n", erlang, capacity, erlangb_overflow_traffic(erlang, capacity));
   }
+  */
 
   return 0;
 }
